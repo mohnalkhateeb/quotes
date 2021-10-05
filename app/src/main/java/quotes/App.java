@@ -10,6 +10,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         Quotes q = new Quotes();
         System.out.println(q.readFromJsonFile("app/src/main/resources/recentquotes.json"));
+        System.out.println(q.readFromJsonFile("app/src/main/resources/testQuote.json"));
 
 
     }
