@@ -1,15 +1,11 @@
 package quotes;
 
-import java.io.FileNotFoundException;
-import java.io.BufferedReader;
+import java.io.*;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.io.FileReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Quotes {
     private String author;
@@ -21,6 +17,7 @@ public class Quotes {
 //    }
 
     public Quotes() {
+
 
     }
 
