@@ -17,7 +17,7 @@ public class Quotes {
 //    }
 
     public Quotes() {
-        
+
 
     }
 
@@ -36,55 +36,7 @@ public class Quotes {
     public String getText() {
         return text;
     }
-    public static Quotes readFromAPI(String urlPath, String backupFilePath)
-    {
-        StringBuilder content = new StringBuilder();
-        Quotes newQuote = null;
 
-        try
-        {
-            URL url = new URL(urlPath);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-//            System.out.println(connection.getResponseCode());
-
-            // synchronous: Java is going to be working on running line 15 for a while.
-            BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-
-            while ((inputLine = input.readLine()) != null) {
-                content.append(inputLine);
-            }
-            input.close();
-
-            newQuote = new Quotes(content.toString().replaceAll("]$|^\\[",""));
-
-            try
-            {
-                writeToFile(backupFilePath, newQuote);
-            }
-            catch (Exception errorFile)
-            {
-                System.err.println(errorFile);
-            }
-        }
-        catch (IOException errorAPI)
-        {
-//            System.err.println(errorAPI);
-
-            System.err.println("No internet connection.");
-            try
-            {
-                newQuote = new Quotes(readFromFile(backupFilePath));
-            }
-            catch (Exception errorFile)
-            {
-                System.err.println(errorFile);
-            }
-        }
-
-        return newQuote;
-    }
 
 //    public  void convertFromJson()  {
 //        GsonBuilder builder = new GsonBuilder();
