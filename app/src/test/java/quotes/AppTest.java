@@ -3,23 +3,19 @@
  */
 package quotes;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     String testReadFile = "./app/src/main/resources/testQuote.json";
-    @Test
-    public void readFromFileTestException()
-    {
-        try
-        {
-            assertEquals("Quotes{author='Marilyn Monroe', text=' “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.�? '}” ",
-                    Quotes.readFromJsonFile(testReadFile));
-        } catch (Exception error)
-        {
-            error.getMessage();
-        }
-    }
+    String quotesFile = "app/src/main/resources/recentquotes.json";
 
     @Test
     public void readFromFileTest()
@@ -31,6 +27,73 @@ class AppTest {
         } catch (Exception error)
         {
             error.getMessage();
+        }
+    }
+
+    @Test
+    public void readFromAPITest()
+    {
+        Quotes testQuote = Quotes.readFromAPI(quotesFile);
+
+        try
+        {
+            assertEquals("ron-swanson", testQuote.getAuthor());
+        }
+        catch (Exception error)
+        {
+            System.out.println(error.getMessage());
+        }
+    }
+
+    @Test
+    public void readFromAPITestInternetProtocol()
+    {
+        try
+        {
+            URL url = new URL("https://ron-swanson-quotes.herokuapp.com/v2/quotes");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            assertEquals(200, connection.getResponseCode());
+        }
+        catch (Exception error)
+        {
+            System.out.println(error.getMessage());
+        }
+    }
+
+    @Test
+    public void readFromAPINoInternetTest()
+    {
+        try
+        {
+            assertEquals(true,Quotes.readFromAPI(quotesFile).toString().split(",").length >1);
+        } catch (Exception error)
+        {
+            System.out.println(error.getMessage());
+        }
+    }
+
+    @Test
+    public void writeToFileTest()
+    {
+        try
+        {
+        Gson gson = new Gson();
+
+        BufferedReader fileReader1 = new BufferedReader(new FileReader(quotesFile));
+        Quotes[] array1 = gson.fromJson(fileReader1, Quotes[].class);
+
+        Quotes.readFromAPI( quotesFile);
+
+        BufferedReader fileReader2 = new BufferedReader(new FileReader(quotesFile));
+        Quotes[] array2 = gson.fromJson(fileReader2, Quotes[].class);
+
+
+            assertTrue(array1.length < array2.length ," the targeted quote and author should be written to the test file.");
+        } catch (Exception error)
+        {
+            System.out.println(error.getMessage());;
         }
     }
 }
