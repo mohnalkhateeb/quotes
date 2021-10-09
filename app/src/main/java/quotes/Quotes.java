@@ -89,24 +89,30 @@ public class Quotes {
         return quote;
     }
 
-    public static void fileWriter(String filePath, Quotes quote) throws Exception
+    public static void fileWriter(String filePath, Quotes quote)
     {
-        Gson gson = new Gson();
+        try{
+            Gson gson = new Gson();
 
-        BufferedReader file = new BufferedReader(new FileReader(filePath));
+            BufferedReader file = new BufferedReader(new FileReader(filePath));
 
-        TypeToken<ArrayList<Quotes>> token = new TypeToken<ArrayList<Quotes>>(){};
+            TypeToken<ArrayList<Quotes>> token = new TypeToken<ArrayList<Quotes>>(){};
 
-        ArrayList<Quotes> quotesFromFiles = gson.fromJson(file, token.getType());
+            ArrayList<Quotes> quotesFromFiles = gson.fromJson(file, token.getType());
 
-        quotesFromFiles.add(quote);
+            quotesFromFiles.add(quote);
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
 
-        writer.write(gson.toJson(quotesFromFiles));
+            writer.write(gson.toJson(quotesFromFiles));
 
-        writer.close();
-        file.close();
+            writer.close();
+            file.close();
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 

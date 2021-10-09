@@ -9,13 +9,13 @@ public class App {
 //        Quotes q = new Quotes();
 //        System.out.println(q.readFromJsonFile("app/src/main/resources/recentquotes.json"));
 //        System.out.println(q.readFromJsonFile("app/src/main/resources/testQuote.json"));
-        String filePath = "./app/src/main/resources/recentquotes.json";
+        String filePath = "app/src/main/resources/recentquotes.json";
 //        String uRLPath = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
 
         try
         {
 
-            System.out.println(Quotes.readFromAPI(filePath));
+            System.out.println(Quotes.readFromAPI( filePath));
 
         }
         catch (Exception error)
