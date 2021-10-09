@@ -9,12 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppTest {
     String testReadFile = "./app/src/main/resources/testQuote.json";
     @Test
+    public void readFromFileTestException()
+    {
+        try
+        {
+            assertEquals("Quotes{author='Marilyn Monroe', text=' “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.�? '}” ",
+                    Quotes.readFromJsonFile(testReadFile));
+        } catch (Exception error)
+        {
+            error.getMessage();
+        }
+    }
+
+    @Test
     public void readFromFileTest()
     {
         try
         {
-            assertEquals("Method should return the targeted quote and author from the test file.",
-                    "Quotes{author='Marilyn Monroe', text=' “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.�? '}” ",
+            assertEquals("Quotes{author='Marilyn Monroe', text=' “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.�? '}",
                     Quotes.readFromJsonFile(testReadFile));
         } catch (Exception error)
         {
